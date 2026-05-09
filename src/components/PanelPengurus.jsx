@@ -73,16 +73,262 @@ function Badge({ status }) {
   );
 }
 
-function KartuStat({ label, value, ikon, accent }) {
+function KartuStat({ label, value, ikon, accent, onClick }) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 hover:shadow-md transition-shadow group cursor-pointer">
+    <button onClick={onClick} className="w-full text-left bg-white rounded-2xl shadow-sm border border-slate-100 p-5 hover:shadow-lg hover:-translate-y-1 hover:border-teal-200 transition-all duration-200 group cursor-pointer">
       <div className="flex items-center gap-3 mb-3">
-        <span className={`flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br ${accent} text-white text-lg shadow-sm`}>
+        <span className={`flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br ${accent} text-white text-lg shadow-sm group-hover:scale-110 transition-transform`}>
           {ikon}
         </span>
         <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{label}</p>
       </div>
       <p className="text-xl font-extrabold text-slate-800">{value}</p>
+      <p className="text-[11px] text-teal-600 font-semibold mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Klik untuk detail →</p>
+    </button>
+  );
+}
+
+/* ─────────── DETAIL VIEWS ─────────── */
+const detailAset = [
+  { kategori: "Rekening Bank Syariah", nilai: 300000000, ket: "BSI, Bank Muamalat" },
+  { kategori: "Kas Fisik", nilai: 150000000, ket: "Brankas kantor pusat" },
+  { kategori: "Pembiayaan Murabahah", nilai: 1200000000, ket: "89 akad aktif" },
+  { kategori: "Pembiayaan Mudharabah", nilai: 800000000, ket: "32 akad aktif" },
+  { kategori: "Aset Tetap (Inventaris)", nilai: 400000000, ket: "Gedung, kendaraan, peralatan" },
+];
+
+const arusKasData = [
+  { bulan: "Jan", masuk: 280, keluar: 160 },
+  { bulan: "Feb", masuk: 300, keluar: 170 },
+  { bulan: "Mar", masuk: 290, keluar: 180 },
+  { bulan: "Apr", masuk: 320, keluar: 185 },
+  { bulan: "Mei", masuk: 340, keluar: 190 },
+];
+
+const pembiayaanAktifData = [
+  { id: "PMB-001", nama: "Ahmad Fauzi", akad: "Murabahah", total: 50000000, terbayar: 35000000 },
+  { id: "PMB-002", nama: "Siti Aisyah", akad: "Mudharabah", total: 80000000, terbayar: 40000000 },
+  { id: "PMB-003", nama: "Budi Santoso", akad: "Murabahah", total: 30000000, terbayar: 27000000 },
+  { id: "PMB-004", nama: "Eko Wijaya", akad: "Musyarakah", total: 60000000, terbayar: 15000000 },
+  { id: "PMB-005", nama: "Nur Halimah", akad: "Mudharabah", total: 25000000, terbayar: 10000000 },
+];
+
+function DetailHeader({ judul, onBack }) {
+  return (
+    <div className="flex items-center gap-4 mb-8">
+      <button onClick={onBack} className="flex items-center gap-2 px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white text-sm font-bold rounded-xl shadow transition-colors">
+        ← Kembali ke Dashboard
+      </button>
+      <h2 className="text-2xl font-bold text-slate-800">{judul}</h2>
+    </div>
+  );
+}
+
+function DetailTotalAset({ onBack }) {
+  const total = detailAset.reduce((a, b) => a + b.nilai, 0);
+  return (
+    <div className="animate-in slide-in-from-right-8 duration-300 space-y-6">
+      <DetailHeader judul="Rincian Total Aset" onBack={onBack} />
+      <div className="bg-gradient-to-r from-teal-700 to-teal-900 rounded-2xl p-6 text-white">
+        <p className="text-teal-200 text-sm font-semibold mb-1">Total Aset Koperasi</p>
+        <p className="text-4xl font-black">{rp(total)}</p>
+        <p className="text-teal-300 text-xs mt-2">Per 30 April 2026 — Terverifikasi DPS ✓</p>
+      </div>
+      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+        <div className="px-6 py-3 bg-slate-50 border-b border-slate-100">
+          <h3 className="font-bold text-slate-700">Komposisi Aset</h3>
+        </div>
+        <table className="w-full text-sm">
+          <thead><tr className="text-xs text-slate-400 uppercase border-b border-slate-100">
+            <th className="px-6 py-3 text-left">Kategori Aset</th>
+            <th className="px-6 py-3 text-right">Nilai</th>
+            <th className="px-6 py-3 text-left">Keterangan</th>
+          </tr></thead>
+          <tbody>
+            {detailAset.map((a, i) => (
+              <tr key={i} className="border-b border-slate-50 hover:bg-amber-50/40 transition-colors">
+                <td className="px-6 py-4 font-semibold text-slate-800">{a.kategori}</td>
+                <td className="px-6 py-4 text-right font-bold text-teal-700">{rp(a.nilai)}</td>
+                <td className="px-6 py-4 text-slate-500 text-xs">{a.ket}</td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot><tr className="bg-teal-50 border-t-2 border-teal-200 font-bold">
+            <td className="px-6 py-4 text-teal-800">Total</td>
+            <td className="px-6 py-4 text-right text-teal-800">{rp(total)}</td>
+            <td />
+          </tr></tfoot>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function DetailArusKas({ onBack }) {
+  const maxVal = Math.max(...arusKasData.map(d => Math.max(d.masuk, d.keluar)));
+  const W = 400; const H = 120; const pad = 30;
+  const pts = (key) => arusKasData.map((d, i) => {
+    const x = pad + (i / (arusKasData.length - 1)) * (W - pad * 2);
+    const y = H - pad - ((d[key] / maxVal) * (H - pad * 2));
+    return `${x},${y}`;
+  }).join(" ");
+  return (
+    <div className="animate-in slide-in-from-right-8 duration-300 space-y-6">
+      <DetailHeader judul="Arus Kas Koperasi" onBack={onBack} />
+      <div className="grid grid-cols-2 gap-4">
+        <div className="bg-emerald-600 rounded-2xl p-5 text-white">
+          <p className="text-emerald-200 text-xs font-bold mb-1">KAS MASUK</p>
+          <p className="text-3xl font-black">{rp(statistik.arusKasMasuk)}</p>
+        </div>
+        <div className="bg-rose-600 rounded-2xl p-5 text-white">
+          <p className="text-rose-200 text-xs font-bold mb-1">KAS KELUAR</p>
+          <p className="text-3xl font-black">{rp(statistik.arusKasKeluar)}</p>
+        </div>
+      </div>
+      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
+        <h3 className="font-bold text-slate-700 mb-4">Tren Bulanan (dalam juta Rp)</h3>
+        <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-36">
+          <polyline fill="none" stroke="#0d9488" strokeWidth="2.5" strokeLinejoin="round" points={pts("masuk")} />
+          <polyline fill="none" stroke="#f43f5e" strokeWidth="2.5" strokeLinejoin="round" points={pts("keluar")} />
+          {arusKasData.map((d, i) => {
+            const x = pad + (i / (arusKasData.length - 1)) * (W - pad * 2);
+            return <text key={i} x={x} y={H - 5} textAnchor="middle" fontSize="10" fill="#94a3b8">{d.bulan}</text>;
+          })}
+        </svg>
+        <div className="flex gap-6 mt-2">
+          <span className="flex items-center gap-2 text-xs text-teal-600 font-semibold"><span className="w-4 h-0.5 bg-teal-500 inline-block" /> Kas Masuk</span>
+          <span className="flex items-center gap-2 text-xs text-rose-500 font-semibold"><span className="w-4 h-0.5 bg-rose-500 inline-block" /> Kas Keluar</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DetailSHU({ onBack }) {
+  const alokasi = [
+    { label: "Anggota", persen: 40, warna: "#0d9488", nilai: 58000000 },
+    { label: "Cadangan", persen: 25, warna: "#10b981", nilai: 36250000 },
+    { label: "Pengurus", persen: 15, warna: "#D4AF37", nilai: 21750000 },
+    { label: "Pendidikan", persen: 10, warna: "#6366f1", nilai: 14500000 },
+    { label: "Sosial/Zakat", persen: 10, warna: "#f59e0b", nilai: 14500000 },
+  ];
+  const R = 60; const cx = 80; const cy = 80; let startAngle = -90;
+  return (
+    <div className="animate-in slide-in-from-right-8 duration-300 space-y-6">
+      <DetailHeader judul="Alokasi SHU Tahun Ini" onBack={onBack} />
+      <div className="bg-gradient-to-r from-amber-600 to-amber-800 rounded-2xl p-6 text-white">
+        <p className="text-amber-200 text-xs font-bold mb-1">TOTAL SHU TAHUN INI</p>
+        <p className="text-4xl font-black">{rp(statistik.shuTahunIni)}</p>
+      </div>
+      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
+        <h3 className="font-bold text-slate-700 mb-6">Distribusi SHU (Donut Chart)</h3>
+        <div className="flex flex-col sm:flex-row items-center gap-8">
+          <svg viewBox="0 0 160 160" className="w-40 h-40 flex-shrink-0">
+            {alokasi.map((a) => {
+              const angle = (a.persen / 100) * 360;
+              const endAngle = startAngle + angle;
+              const r = startAngle * Math.PI / 180; const e = endAngle * Math.PI / 180;
+              const x1 = cx + R * Math.cos(r); const y1 = cy + R * Math.sin(r);
+              const x2 = cx + R * Math.cos(e); const y2 = cy + R * Math.sin(e);
+              const largeArc = angle > 180 ? 1 : 0;
+              const d = `M ${cx} ${cy} L ${x1} ${y1} A ${R} ${R} 0 ${largeArc} 1 ${x2} ${y2} Z`;
+              startAngle = endAngle;
+              return <path key={a.label} d={d} fill={a.warna} opacity="0.9" />;
+            })}
+            <circle cx={cx} cy={cy} r="38" fill="white" />
+            <text x={cx} y={cy - 4} textAnchor="middle" fontSize="8" fill="#64748b" fontWeight="bold">SHU</text>
+            <text x={cx} y={cy + 8} textAnchor="middle" fontSize="7" fill="#94a3b8">2026</text>
+          </svg>
+          <div className="space-y-3 flex-1">
+            {alokasi.map((a) => (
+              <div key={a.label} className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: a.warna }} />
+                  <span className="text-sm font-semibold text-slate-700">{a.label} ({a.persen}%)</span>
+                </div>
+                <span className="text-sm font-bold text-slate-800">{rp(a.nilai)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DetailAnggotaStat({ onBack }) {
+  return (
+    <div className="animate-in slide-in-from-right-8 duration-300 space-y-6">
+      <DetailHeader judul="Direktori Anggota" onBack={onBack} />
+      <div className="grid grid-cols-3 gap-4">
+        <div className="bg-teal-600 rounded-xl p-4 text-white text-center"><p className="text-2xl font-black">347</p><p className="text-teal-200 text-xs">Total</p></div>
+        <div className="bg-emerald-600 rounded-xl p-4 text-white text-center"><p className="text-2xl font-black">328</p><p className="text-emerald-200 text-xs">Aktif</p></div>
+        <div className="bg-slate-500 rounded-xl p-4 text-white text-center"><p className="text-2xl font-black">19</p><p className="text-slate-300 text-xs">Tidak Aktif</p></div>
+      </div>
+      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+        <table className="w-full text-sm">
+          <thead><tr className="text-xs text-slate-400 uppercase border-b border-slate-100 bg-slate-50">
+            <th className="px-6 py-3 text-left">ID</th>
+            <th className="px-6 py-3 text-left">Nama</th>
+            <th className="px-6 py-3 text-left">Bergabung</th>
+            <th className="px-6 py-3 text-right">Saldo</th>
+            <th className="px-6 py-3 text-center">Status</th>
+          </tr></thead>
+          <tbody>
+            {dataAnggota.map((a, i) => (
+              <tr key={a.id} className={`border-b border-slate-50 hover:bg-teal-50/30 transition-colors ${i % 2 ? "bg-slate-50/40" : ""}`}>
+                <td className="px-6 py-4 font-mono text-slate-500">{a.id}</td>
+                <td className="px-6 py-4 font-bold text-slate-800">{a.nama}</td>
+                <td className="px-6 py-4 text-slate-500">{tgl(a.tglGabung)}</td>
+                <td className="px-6 py-4 text-right font-semibold text-teal-700">{rp(a.saldo)}</td>
+                <td className="px-6 py-4 text-center"><Badge status={a.status} /></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function DetailPembiayaanAktif({ onBack }) {
+  const [filter, setFilter] = useState("Semua");
+  const akadList = ["Semua", "Murabahah", "Mudharabah", "Musyarakah"];
+  const filtered = filter === "Semua" ? pembiayaanAktifData : pembiayaanAktifData.filter(p => p.akad === filter);
+  return (
+    <div className="animate-in slide-in-from-right-8 duration-300 space-y-6">
+      <DetailHeader judul="Pembiayaan Aktif" onBack={onBack} />
+      <div className="flex gap-2 flex-wrap">
+        {akadList.map(a => (
+          <button key={a} onClick={() => setFilter(a)} className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${filter === a ? "bg-teal-700 text-white shadow" : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"}`}>{a}</button>
+        ))}
+      </div>
+      <div className="space-y-4">
+        {filtered.map(p => {
+          const pct = Math.round((p.terbayar / p.total) * 100);
+          return (
+            <div key={p.id} className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <p className="font-bold text-slate-800">{p.nama}</p>
+                  <p className="text-xs text-slate-500">{p.id} · <span className="font-semibold text-teal-600">{p.akad}</span></p>
+                </div>
+                <span className="text-sm font-bold text-slate-700">{rp(p.total)}</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="flex-1 h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                  <div className="h-full rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 transition-all" style={{ width: `${pct}%` }} />
+                </div>
+                <span className="text-xs font-bold text-teal-600 w-10 text-right">{pct}%</span>
+              </div>
+              <div className="flex justify-between text-xs text-slate-400 mt-1">
+                <span>Terbayar: {rp(p.terbayar)}</span>
+                <span>Sisa: {rp(p.total - p.terbayar)}</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -133,6 +379,7 @@ function ModalDetail({ isOpen, onClose, data }) {
 
 /* ─────────── VIEWS ─────────── */
 function ViewDashboard() {
+  const [detail, setDetail] = useState(null);
   const distSHU = [
     { label: "Anggota (40%)", persen: 40, warna: "bg-teal-500" },
     { label: "Cadangan (25%)", persen: 25, warna: "bg-emerald-500" },
@@ -141,17 +388,23 @@ function ViewDashboard() {
     { label: "Sosial (10%)", persen: 10, warna: "bg-indigo-500" },
   ];
 
+  if (detail === "aset") return <DetailTotalAset onBack={() => setDetail(null)} />;
+  if (detail === "kas") return <DetailArusKas onBack={() => setDetail(null)} />;
+  if (detail === "shu") return <DetailSHU onBack={() => setDetail(null)} />;
+  if (detail === "anggota") return <DetailAnggotaStat onBack={() => setDetail(null)} />;
+  if (detail === "pembiayaan") return <DetailPembiayaanAktif onBack={() => setDetail(null)} />;
+
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div>
         <h2 className="text-2xl font-bold text-slate-800 mb-6">Dashboard Ringkasan</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <KartuStat label="Total Aset" value={rp(statistik.totalAset)} ikon="🏦" accent="from-teal-500 to-teal-700" />
-          <KartuStat label="Arus Kas Masuk" value={rp(statistik.arusKasMasuk)} ikon="📈" accent="from-emerald-500 to-emerald-700" />
-          <KartuStat label="Arus Kas Keluar" value={rp(statistik.arusKasKeluar)} ikon="📉" accent="from-rose-500 to-rose-700" />
-          <KartuStat label="SHU Tahun Ini" value={rp(statistik.shuTahunIni)} ikon="💰" accent="from-amber-500 to-amber-700" />
-          <KartuStat label="Total Anggota" value={statistik.totalAnggota} ikon="👥" accent="from-cyan-500 to-cyan-700" />
-          <KartuStat label="Pembiayaan Aktif" value={statistik.pembiayaanAktif} ikon="📋" accent="from-indigo-500 to-indigo-700" />
+          <KartuStat label="Total Aset" value={rp(statistik.totalAset)} ikon="🏦" accent="from-teal-500 to-teal-700" onClick={() => setDetail("aset")} />
+          <KartuStat label="Arus Kas Masuk" value={rp(statistik.arusKasMasuk)} ikon="📈" accent="from-emerald-500 to-emerald-700" onClick={() => setDetail("kas")} />
+          <KartuStat label="Arus Kas Keluar" value={rp(statistik.arusKasKeluar)} ikon="📉" accent="from-rose-500 to-rose-700" onClick={() => setDetail("kas")} />
+          <KartuStat label="SHU Tahun Ini" value={rp(statistik.shuTahunIni)} ikon="💰" accent="from-amber-500 to-amber-700" onClick={() => setDetail("shu")} />
+          <KartuStat label="Total Anggota" value={statistik.totalAnggota} ikon="👥" accent="from-cyan-500 to-cyan-700" onClick={() => setDetail("anggota")} />
+          <KartuStat label="Pembiayaan Aktif" value={statistik.pembiayaanAktif} ikon="📋" accent="from-indigo-500 to-indigo-700" onClick={() => setDetail("pembiayaan")} />
         </div>
       </div>
 

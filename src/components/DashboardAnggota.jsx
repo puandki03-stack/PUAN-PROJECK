@@ -124,34 +124,84 @@ export default function DashboardAnggota({ user }) {
     <div className="min-h-screen bg-slate-50">
 
       {/* ── HERO ── */}
-      <header className="gradient-teal text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-            <div className="fade-up">
-              <div className="inline-flex items-center gap-2 bg-white/15 border border-white/20 rounded-full px-3 py-1.5 text-xs font-semibold text-teal-100 mb-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-teal-300 animate-pulse" />
-                KSPPS Syariah Digital
+      <header className="relative overflow-hidden bg-slate-900 text-white">
+        {/* Decorative background layers */}
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-900/60 via-slate-900 to-slate-800" />
+        <div className="absolute top-0 left-0 w-72 h-72 bg-teal-500/10 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-teal-600/10 rounded-full translate-x-1/4 translate-y-1/4 blur-3xl" />
+        <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-emerald-500/5 rounded-full blur-2xl" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+            {/* Left — Greeting */}
+            <div className="fade-up space-y-4">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 bg-teal-500/15 border border-teal-400/30 rounded-full px-4 py-1.5 text-xs font-semibold text-teal-300">
+                <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
+                KSPPS Syariah Digital — Platform Resmi
               </div>
-              <h1 className="text-3xl sm:text-4xl font-black tracking-tight">
-                Assalamu&apos;alaikum, <span className="text-teal-200">{name}</span> 👋
-              </h1>
-              <p className="mt-2 text-teal-100 text-sm max-w-lg">
-                Kelola simpanan &amp; pembiayaan syariah Anda dengan mudah, aman, dan amanah.
+
+              {/* Greeting */}
+              <div>
+                <p className="text-slate-400 text-sm font-medium mb-1 uppercase tracking-widest">Dashboard Anggota</p>
+                <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white leading-tight">
+                  Assalamu&apos;alaikum,{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-emerald-300">
+                    {name}
+                  </span>{" "}
+                  👋
+                </h1>
+              </div>
+
+              <p className="text-slate-400 text-sm max-w-md leading-relaxed">
+                Kelola simpanan &amp; pembiayaan syariah Anda dengan mudah, aman, dan penuh amanah bersama KSPPS Digital.
               </p>
+
+              {/* Quick stats row */}
+              <div className="flex items-center gap-4 pt-1">
+                <div className="flex items-center gap-1.5 text-xs text-teal-400 font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-teal-400" />
+                  Akun Aktif
+                </div>
+                <div className="w-px h-4 bg-slate-700" />
+                <div className="text-xs text-slate-400">
+                  Status: <span className="text-emerald-400 font-semibold">Anggota Terverifikasi ✓</span>
+                </div>
+              </div>
             </div>
-            {/* portofolio card */}
-            <div className="fade-up bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-5 lg:min-w-[220px]">
-              <p className="text-teal-200 text-xs font-semibold uppercase tracking-wide mb-1">Total Portofolio</p>
-              <p className="text-3xl font-black text-white font-heading">{rp(total)}</p>
-              <p className="text-teal-300 text-xs mt-2">3 jenis simpanan aktif ✓</p>
+
+            {/* Right — Portfolio Card */}
+            <div className="fade-up flex-shrink-0">
+              <div className="relative bg-gradient-to-br from-teal-800/50 to-slate-800/80 backdrop-blur-sm border border-teal-700/40 rounded-2xl p-6 lg:min-w-[260px] shadow-2xl shadow-teal-900/30">
+                {/* Card decoration */}
+                <div className="absolute top-0 right-0 w-24 h-24 bg-teal-400/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-xl" />
+
+                <div className="relative">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="w-8 h-8 rounded-lg bg-teal-500/20 border border-teal-500/30 flex items-center justify-center text-sm">
+                      💼
+                    </div>
+                    <p className="text-teal-300 text-xs font-bold uppercase tracking-wider">Total Portofolio</p>
+                  </div>
+                  <p className="text-4xl font-black text-white font-heading tracking-tight">{rp(total)}</p>
+                  <div className="mt-4 pt-4 border-t border-teal-700/30 flex items-center justify-between">
+                    <p className="text-slate-400 text-xs">3 jenis simpanan</p>
+                    <span className="text-xs bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 font-bold px-2.5 py-1 rounded-full">
+                      ✓ Aktif
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        {/* wave */}
-        <svg viewBox="0 0 1440 36" fill="none" className="w-full" style={{ marginBottom: "-1px" }} preserveAspectRatio="none">
+
+        {/* Wave divider */}
+        <svg viewBox="0 0 1440 36" fill="none" className="w-full relative" style={{ marginBottom: "-1px" }} preserveAspectRatio="none">
           <path d="M0 36C480 0 960 0 1440 36H0Z" fill="#f8fafc" />
         </svg>
       </header>
+
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
 
@@ -177,7 +227,7 @@ export default function DashboardAnggota({ user }) {
                     Setor Sekarang →
                   </Link>
                 </div>
-              )}}) } />
+              )}) } />
           </div>
         </section>
 
@@ -206,7 +256,7 @@ export default function DashboardAnggota({ user }) {
                       Ajukan Pembiayaan →
                     </Link>
                   </div>
-                )}}) }
+                )}) }
               />
             ))}
           </div>
