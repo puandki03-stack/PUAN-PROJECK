@@ -95,32 +95,40 @@ export default function SimpananProses() {
   );
 
   const inputCls = (err) =>
-    `w-full rounded-xl border ${
-      err ? "border-red-400 ring-2 ring-red-100" : "border-slate-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-100"
+    `w-full rounded-none border ${
+      err ? "border-red-400 ring-2 ring-red-100" : "border-slate-200 focus:border-teal-700 focus:ring-1 focus:ring-teal-700"
     } bg-white px-4 py-3 text-sm text-slate-800 placeholder-slate-400 outline-none transition-all`;
 
   return (
     <div className="min-h-screen bg-slate-50">
       {/* HEADER */}
-      <header className="bg-gradient-to-r from-teal-700 via-teal-600 to-teal-800 text-white shadow-lg">
-        <div className="max-w-5xl mx-auto px-4 sm:px-8 py-8">
-          <p className="text-teal-200 text-sm font-medium tracking-wide uppercase mb-1">Koperasi Syariah Digital</p>
+      <header className="relative overflow-hidden bg-gradient-to-br from-teal-800 via-teal-700 to-teal-600 text-white shadow-lg">
+        <div className="absolute -top-12 -right-12 w-48 h-48 rounded-none bg-white/5" />
+        <div className="absolute -bottom-8 -left-8 w-36 h-36 rounded-none bg-white/5" />
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-8 py-10">
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-none px-3 py-1 mb-3">
+            <span className="w-2 h-2 rounded-none bg-teal-300 animate-pulse" />
+            <span className="text-xs font-semibold text-teal-100 tracking-wider uppercase">Koperasi Syariah Digital</span>
+          </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">Proses Simpanan &amp; Pengajuan</h1>
-          <p className="mt-2 text-teal-100">Ajukan pembiayaan dan kelola zakat/infaq Anda dengan mudah.</p>
+          <p className="mt-2 text-teal-100 text-sm sm:text-base">Ajukan pembiayaan dan kelola zakat/infaq Anda dengan mudah.</p>
         </div>
+        <svg viewBox="0 0 1440 36" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full -mb-1" preserveAspectRatio="none">
+          <path d="M0 36 C360 0 1080 0 1440 36 L1440 36 L0 36 Z" fill="#f8fafc" />
+        </svg>
       </header>
 
       <main className="max-w-5xl mx-auto px-4 sm:px-8 py-10 space-y-14">
 
         {/* ═══════════ FORM SETORAN / PENGAJUAN ═══════════ */}
         <section>
-          <div className="flex items-center gap-2 mb-6">
-            <div className="h-8 w-1.5 rounded-full bg-gradient-to-b from-teal-400 to-teal-700" />
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-8 w-1.5 rounded-none bg-gradient-to-b from-teal-400 to-teal-700 shrink-0" />
             <h2 className="text-xl font-bold text-slate-800">Form Pengajuan Pembiayaan</h2>
           </div>
 
           {/* Pesan Ta'awun */}
-          <div className="mb-6 bg-teal-50 border border-teal-200 rounded-2xl p-5 flex gap-4 items-start">
+          <div className="mb-6 bg-teal-50 border border-teal-200 rounded-none p-5 flex gap-4 items-start">
             <span className="text-3xl mt-0.5">🤲</span>
             <div>
               <p className="text-sm font-bold text-teal-800 mb-1">Keutamaan Ta&apos;awun (Tolong-Menolong)</p>
@@ -134,24 +142,24 @@ export default function SimpananProses() {
 
           {submitted ? (
             /* Sukses */
-            <div className="bg-white rounded-2xl shadow-md border border-emerald-200 p-8 text-center space-y-4">
+            <div className="bg-white rounded-none shadow-md border border-emerald-200 p-8 text-center space-y-4">
               <span className="text-5xl">✅</span>
               <h3 className="text-xl font-bold text-emerald-700">Pengajuan Berhasil Dikirim!</h3>
               <p className="text-sm text-slate-500">Pengajuan Anda akan diverifikasi oleh pengurus. Semoga dimudahkan.</p>
-              <div className="bg-slate-50 rounded-xl p-4 text-left text-sm space-y-1 max-w-md mx-auto">
+              <div className="bg-slate-50 rounded-none p-4 text-left text-sm space-y-1 max-w-md mx-auto">
                 <p><span className="font-semibold text-slate-600">Produk:</span> {form.jenisProduk}</p>
                 <p><span className="font-semibold text-slate-600">Nama:</span> {form.namaPengaju}</p>
                 <p><span className="font-semibold text-slate-600">Aset:</span> {rp(Number(form.asetDimiliki))}</p>
                 <p><span className="font-semibold text-slate-600">Pengajuan:</span> {rp(Number(form.totalPengajuan))}</p>
                 <p><span className="font-semibold text-slate-600">Metode:</span> {form.metodeBayar}</p>
               </div>
-              <button onClick={resetForm} className="mt-2 px-6 py-2.5 rounded-xl bg-teal-600 text-white font-semibold hover:bg-teal-700 transition-colors shadow-sm">
+              <button onClick={resetForm} className="mt-2 px-6 py-2.5 rounded-none bg-teal-600 text-white font-semibold hover:bg-teal-700 transition-colors shadow-sm">
                 Buat Pengajuan Baru
               </button>
             </div>
           ) : (
             /* Form */
-            <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-md border border-slate-100 p-6 sm:p-8 space-y-5">
+            <form onSubmit={handleSubmit} className="bg-white rounded-none shadow-md border border-slate-100 p-6 sm:p-8 space-y-5">
               {/* Jenis Produk */}
               <InputField label="Jenis Produk Pembiayaan" id="jenisProduk" error={errors.jenisProduk}>
                 <select
@@ -211,7 +219,7 @@ export default function SimpananProses() {
                   {["Transfer Bank", "Potong Saldo"].map((m) => (
                     <label
                       key={m}
-                      className={`flex-1 cursor-pointer rounded-xl border-2 px-4 py-3 text-center text-sm font-semibold transition-all ${
+                      className={`flex-1 cursor-pointer rounded-none border-2 px-4 py-3 text-center text-sm font-semibold transition-all ${
                         form.metodeBayar === m
                           ? "border-teal-500 bg-teal-50 text-teal-700"
                           : "border-slate-200 text-slate-500 hover:border-slate-300"
@@ -234,7 +242,7 @@ export default function SimpananProses() {
 
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-teal-600 to-teal-700 text-white font-bold text-base hover:from-teal-700 hover:to-teal-800 transition-all shadow-md shadow-teal-200 active:scale-[0.98]"
+                className="w-full py-3.5 rounded-none bg-gradient-to-r from-teal-600 to-teal-700 text-white font-bold text-base hover:from-teal-700 hover:to-teal-800 transition-all shadow-md shadow-teal-200 active:scale-[0.98]"
               >
                 Kirim Pengajuan
               </button>
@@ -244,12 +252,12 @@ export default function SimpananProses() {
 
         {/* ═══════════ KALKULATOR ZAKAT & INFAQ ═══════════ */}
         <section>
-          <div className="flex items-center gap-2 mb-6">
-            <div className="h-8 w-1.5 rounded-full bg-gradient-to-b from-teal-400 to-teal-700" />
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-8 w-1.5 rounded-none bg-gradient-to-b from-teal-400 to-teal-700 shrink-0" />
             <h2 className="text-xl font-bold text-slate-800">Kalkulator Zakat Mal &amp; Infaq</h2>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-md border border-slate-100 p-6 sm:p-8 space-y-6">
+          <div className="bg-white rounded-none shadow-md border border-slate-100 p-6 sm:p-8 space-y-6">
             {/* Input Saldo */}
             <div>
               <label htmlFor="saldoSimpanan" className="block text-sm font-semibold text-slate-700 mb-1.5">
@@ -262,13 +270,13 @@ export default function SimpananProses() {
                 placeholder="Masukkan total saldo simpanan"
                 value={saldoSimpanan}
                 onChange={(e) => setSaldoSimpanan(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-100 bg-white px-4 py-3 text-sm text-slate-800 placeholder-slate-400 outline-none transition-all"
+                className="w-full rounded-none border border-slate-200 focus:border-teal-700 focus:ring-1 focus:ring-teal-700 bg-white px-4 py-3 text-sm text-slate-800 placeholder-slate-400 outline-none transition-all"
               />
             </div>
 
             {/* Hasil Zakat */}
             {zakatInfo && (
-              <div className={`rounded-2xl p-5 ${zakatInfo.wajibZakat ? "bg-amber-50 border border-amber-200" : "bg-slate-50 border border-slate-200"}`}>
+              <div className={`rounded-none p-5 ${zakatInfo.wajibZakat ? "bg-amber-50 border border-amber-200" : "bg-slate-50 border border-slate-200"}`}>
                 <h4 className="font-bold text-sm mb-3 flex items-center gap-2">
                   {zakatInfo.wajibZakat ? "⚠️" : "ℹ️"}
                   <span className={zakatInfo.wajibZakat ? "text-amber-800" : "text-slate-600"}>
@@ -312,7 +320,7 @@ export default function SimpananProses() {
                     onChange={(e) => setInfaqAktif(e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-slate-200 peer-focus:ring-2 peer-focus:ring-teal-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-600" />
+                  <div className="w-11 h-6 bg-slate-200 peer-focus:ring-2 peer-focus:ring-teal-200 rounded-none peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-none after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-600" />
                 </label>
               </div>
 
@@ -324,10 +332,10 @@ export default function SimpananProses() {
                     placeholder="Masukkan nominal infaq (Rp)"
                     value={infaqNominal}
                     onChange={(e) => setInfaqNominal(e.target.value)}
-                    className="w-full rounded-xl border border-slate-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-100 bg-white px-4 py-3 text-sm text-slate-800 placeholder-slate-400 outline-none transition-all"
+                    className="w-full rounded-none border border-slate-200 focus:border-teal-700 focus:ring-1 focus:ring-teal-700 bg-white px-4 py-3 text-sm text-slate-800 placeholder-slate-400 outline-none transition-all"
                   />
                   {infaqNum > 0 && (
-                    <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-sm">
+                    <div className="bg-emerald-50 border border-emerald-200 rounded-none p-4 text-sm">
                       <p className="text-emerald-700">
                         Anda berinfaq sebesar <span className="font-bold">{rp(infaqNum)}</span>. Jazakallahu khairan! 🤲
                       </p>
@@ -339,7 +347,7 @@ export default function SimpananProses() {
 
             {/* Ringkasan */}
             {(zakatInfo?.wajibZakat || (infaqAktif && infaqNum > 0)) && (
-              <div className="bg-gradient-to-r from-teal-600 to-teal-700 rounded-2xl p-6 text-white">
+              <div className="bg-gradient-to-r from-teal-600 to-teal-700 rounded-none p-6 text-white">
                 <h4 className="font-bold mb-3">📋 Ringkasan Kewajiban &amp; Kebaikan</h4>
                 <div className="space-y-2 text-sm">
                   {zakatInfo?.wajibZakat && (
@@ -367,21 +375,25 @@ export default function SimpananProses() {
         </section>
 
         {/* Motivasi penutup */}
-        <section className="bg-gradient-to-r from-teal-600 to-teal-700 rounded-2xl p-8 text-white shadow-lg">
-          <p className="text-lg font-semibold mb-1">🌙 Pengingat</p>
-          <p className="text-teal-100 leading-relaxed italic">
-            &quot;Sedekah itu tidak mengurangi harta. Allah tidak menambah seorang hamba yang
-            pemaaf kecuali kemuliaan, dan tidaklah seseorang merendahkan diri karena Allah
-            kecuali Dia meninggikannya.&quot;
-            <span className="not-italic font-semibold block mt-1 text-white/90">— HR. Muslim</span>
-          </p>
+        <section className="relative overflow-hidden bg-gradient-to-r from-teal-700 to-teal-600 rounded-none p-8 text-white shadow-xl">
+          <div className="absolute top-0 right-0 w-40 h-40 rounded-none bg-white/5 -translate-y-1/2 translate-x-1/3" />
+          <div className="relative">
+            <p className="text-base font-bold mb-2 flex items-center gap-2"><span>🌙</span> Pengingat Islami</p>
+            <p className="text-teal-100 leading-relaxed italic text-sm sm:text-base max-w-2xl">
+              &ldquo;Sedekah itu tidak mengurangi harta. Allah tidak menambah seorang hamba yang
+              pemaaf kecuali kemuliaan, dan tidaklah seseorang merendahkan diri karena Allah
+              kecuali Dia meninggikannya.&rdquo;
+            </p>
+            <span className="not-italic font-bold block mt-2 text-white/90 text-sm">— HR. Muslim</span>
+          </div>
         </section>
       </main>
 
       {/* FOOTER */}
-      <footer className="bg-slate-100 border-t border-slate-200 mt-8">
-        <div className="max-w-5xl mx-auto px-4 sm:px-8 py-6 text-center text-sm text-slate-500">
-          © 2026 Koperasi Syariah Digital — Amanah · Berkah · Transparan
+      <footer className="bg-white border-t border-teal-100 mt-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-8 py-5 flex flex-col sm:flex-row justify-between items-center gap-2">
+          <span className="text-sm font-bold text-teal-700">Koperasi<span className="font-light">Syariah</span> Digital</span>
+          <span className="text-xs text-slate-400">© 2026 — Amanah · Berkah · Transparan</span>
         </div>
       </footer>
     </div>

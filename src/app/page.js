@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const menuItems = [
   {
-    href: "/dashboard",
+    href: "/dashboard-anggota",
     ikon: "👤",
     judul: "Dashboard Anggota",
     deskripsi: "Portofolio simpanan, katalog pembiayaan, dan riwayat transaksi.",
@@ -10,7 +10,7 @@ const menuItems = [
     ring: "ring-teal-200",
   },
   {
-    href: "/pengurus",
+    href: "/dashboard-pengurus",
     ikon: "🛡️",
     judul: "Panel Pengurus",
     deskripsi: "Manajemen transaksi, laporan keuangan, dan verifikasi syariah.",
