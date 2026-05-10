@@ -9,10 +9,10 @@ export interface TransactionRecord {
   margin?: number       // For Sharia compliance checking
   bunga_statis?: number // Ribawi component to flag/filter out
   created_at: string
-  profiles: {
+  profiles: Array<{     // Supabase JOIN returns an array, not a single object
     full_name: string
     [key: string]: any
-  }
+  }>
 }
 
 export async function GET() {

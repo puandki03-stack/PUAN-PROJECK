@@ -65,7 +65,7 @@ function KartuSimpanan({ label, nominal, ikon, pct, delay, onClick }) {
         <div className="w-11 h-11 rounded-xl bg-teal-50 flex items-center justify-center text-xl border border-teal-100">{ikon}</div>
         <span className="text-xs bg-teal-50 text-teal-700 font-semibold px-2 py-1 rounded-full border border-teal-100">{pct}</span>
       </div>
-      <p className="text-xs text-slate-400 font-semibold uppercase tracking-wide mb-1">{label}</p>
+      <p className="text-xs text-slate-600 font-semibold uppercase tracking-wide mb-1">{label}</p>
       <p className="text-xl font-bold text-slate-800 font-heading">{rp(nominal)}</p>
       <div className="mt-3 flex items-center gap-1.5 text-xs text-teal-600 font-semibold">
         <span>Lihat detail</span>
@@ -89,7 +89,7 @@ function KartuProduk({ p, delay, onClick }) {
       <div className="p-4">
         <div className="text-2xl mb-3">{p.ikon}</div>
         <h3 className="font-bold text-slate-800 text-sm mb-1">{p.nama}</h3>
-        <p className="text-xs text-slate-500 leading-relaxed mb-3">{p.desc}</p>
+        <p className="text-xs text-slate-600 leading-relaxed mb-3">{p.desc}</p>
         <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full border ${p.color}`}>{p.info}</span>
       </div>
     </button>
@@ -112,10 +112,10 @@ export default function DashboardAnggota({ user }) {
   const openSimpanan = (label, desc, nominal) =>
     setModal({ title: label, content: (
       <div className="space-y-4">
-        <p className="text-slate-500 leading-relaxed">{desc}</p>
-        <div className="gradient-teal rounded-xl p-4">
-          <p className="text-teal-200 text-xs font-semibold uppercase tracking-wide mb-1">Saldo Saat Ini</p>
-          <p className="text-white text-2xl font-bold font-heading">{rp(nominal)}</p>
+        <p className="text-slate-600 leading-relaxed">{desc}</p>
+        <div className="bg-teal-800 rounded-xl p-4 border border-teal-700">
+          <p className="text-teal-300 text-xs font-bold uppercase tracking-wide mb-1">Saldo Saat Ini</p>
+          <p className="text-white text-2xl font-black">{rp(nominal)}</p>
         </div>
       </div>
     )});
@@ -136,14 +136,14 @@ export default function DashboardAnggota({ user }) {
             {/* Left — Greeting */}
             <div className="fade-up space-y-4">
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 bg-teal-500/15 border border-teal-400/30 rounded-full px-4 py-1.5 text-xs font-semibold text-teal-300">
+              <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-400/40 rounded-full px-4 py-1.5 text-xs font-semibold text-teal-200">
                 <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
                 KSPPS Syariah Digital — Platform Resmi
               </div>
 
               {/* Greeting */}
               <div>
-                <p className="text-slate-400 text-sm font-medium mb-1 uppercase tracking-widest">Dashboard Anggota</p>
+                <p className="text-slate-300 text-sm font-semibold mb-1 uppercase tracking-widest">Dashboard Anggota</p>
                 <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white leading-tight">
                   Assalamu&apos;alaikum,{" "}
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-emerald-300">
@@ -153,7 +153,7 @@ export default function DashboardAnggota({ user }) {
                 </h1>
               </div>
 
-              <p className="text-slate-400 text-sm max-w-md leading-relaxed">
+              <p className="text-slate-300 text-sm max-w-md leading-relaxed">
                 Kelola simpanan &amp; pembiayaan syariah Anda dengan mudah, aman, dan penuh amanah bersama KSPPS Digital.
               </p>
 
@@ -164,8 +164,8 @@ export default function DashboardAnggota({ user }) {
                   Akun Aktif
                 </div>
                 <div className="w-px h-4 bg-slate-700" />
-                <div className="text-xs text-slate-400">
-                  Status: <span className="text-emerald-400 font-semibold">Anggota Terverifikasi ✓</span>
+                <div className="text-xs text-slate-300">
+                  Status: <span className="text-emerald-300 font-bold">Anggota Terverifikasi ✓</span>
                 </div>
               </div>
             </div>
@@ -181,12 +181,12 @@ export default function DashboardAnggota({ user }) {
                     <div className="w-8 h-8 rounded-lg bg-teal-500/20 border border-teal-500/30 flex items-center justify-center text-sm">
                       💼
                     </div>
-                    <p className="text-teal-300 text-xs font-bold uppercase tracking-wider">Total Portofolio</p>
+                    <p className="text-teal-200 text-xs font-bold uppercase tracking-wider">Total Portofolio</p>
                   </div>
                   <p className="text-4xl font-black text-white font-heading tracking-tight">{rp(total)}</p>
                   <div className="mt-4 pt-4 border-t border-teal-700/30 flex items-center justify-between">
-                    <p className="text-slate-400 text-xs">3 jenis simpanan</p>
-                    <span className="text-xs bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 font-bold px-2.5 py-1 rounded-full">
+                    <p className="text-slate-300 text-xs font-medium">3 jenis simpanan</p>
+                    <span className="text-xs bg-emerald-500/30 border border-emerald-400/50 text-emerald-300 font-bold px-2.5 py-1 rounded-full">
                       ✓ Aktif
                     </span>
                   </div>
@@ -219,9 +219,9 @@ export default function DashboardAnggota({ user }) {
               onClick={() => setModal({ title: "Simpanan Sukarela", content: (
                 <div className="space-y-4">
                   <p className="text-slate-500 leading-relaxed">Tabungan tambahan yang bisa disetor dan ditarik kapan saja sesuai kesepakatan. Sangat dianjurkan untuk masa depan Anda.</p>
-                  <div className="gradient-teal rounded-xl p-4">
-                    <p className="text-teal-200 text-xs font-semibold uppercase tracking-wide mb-1">Saldo Saat Ini</p>
-                    <p className="text-white text-2xl font-bold font-heading">{rp(dataSimpanan.sukarela)}</p>
+                  <div className="bg-teal-800 rounded-xl p-4 border border-teal-700">
+                    <p className="text-teal-300 text-xs font-bold uppercase tracking-wide mb-1">Saldo Saat Ini</p>
+                    <p className="text-white text-2xl font-black">{rp(dataSimpanan.sukarela)}</p>
                   </div>
                   <Link href="/simpanan" className="block w-full text-center bg-teal-700 hover:bg-teal-800 text-white font-bold py-2.5 rounded-xl transition-colors">
                     Setor Sekarang →
@@ -287,14 +287,15 @@ export default function DashboardAnggota({ user }) {
         </section>
 
         {/* ── MOTIVASI ── */}
-        <section className="gradient-teal rounded-2xl p-7 text-white relative overflow-hidden">
-          <div className="absolute right-0 top-0 w-48 h-48 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/4" />
+        <section className="bg-slate-800 rounded-2xl p-7 relative overflow-hidden border border-teal-900/50">
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-900/60 to-slate-800 rounded-2xl" />
+          <div className="absolute right-0 top-0 w-48 h-48 bg-teal-500/10 rounded-full -translate-y-1/2 translate-x-1/4 blur-2xl" />
           <div className="relative">
-            <p className="text-teal-200 text-xs font-bold uppercase tracking-widest mb-2">💡 Motivasi Hari Ini</p>
-            <p className="text-white text-base italic leading-relaxed max-w-2xl">
+            <p className="text-teal-300 text-xs font-black uppercase tracking-widest mb-3">💡 Motivasi Hari Ini</p>
+            <p className="text-white text-base font-medium italic leading-relaxed max-w-2xl">
               &ldquo;Dan tolong-menolonglah kamu dalam (mengerjakan) kebajikan dan takwa, dan jangan tolong-menolong dalam berbuat dosa dan permusuhan.&rdquo;
             </p>
-            <p className="text-teal-300 text-sm font-semibold mt-2">— QS. Al-Ma&apos;idah : 2</p>
+            <p className="text-emerald-300 text-sm font-bold mt-3">— QS. Al-Ma&apos;idah : 2</p>
           </div>
         </section>
 
