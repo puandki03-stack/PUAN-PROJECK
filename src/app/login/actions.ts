@@ -8,7 +8,7 @@ export async function login(formData: FormData) {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
-  // Hardcoded check
+  // Hardcoded check for Anggota
   if (email === 'Anggota@Koperasi.com' && password === 'Anggota123') {
     const cookieStore = await cookies()
     const sessionData = JSON.stringify({ email, role: 'Anggota' })
@@ -17,7 +17,16 @@ export async function login(formData: FormData) {
     redirect('/dashboard-anggota')
   }
 
-  redirect('/login?message=Kredensial tidak valid. Gunakan Anggota@Koperasi.com dan Anggota123')
+  // Hardcoded check for Pengurus
+  if (email === 'Pengurus@Koperasi.com' && password === 'Pengurus123') {
+    const cookieStore = await cookies()
+    const sessionData = JSON.stringify({ email, role: 'Pengurus' })
+    cookieStore.set('mock_user', sessionData, { path: '/' })
+    revalidatePath('/', 'layout')
+    redirect('/dashboard-pengurus')
+  }
+
+  redirect('/login?message=Kredensial tidak valid. Silakan periksa kembali email dan password Anda.')
 }
 
 export async function loginAdmin(formData: FormData) {
