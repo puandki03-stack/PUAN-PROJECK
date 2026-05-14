@@ -11,8 +11,11 @@ export default function Navigation({ userEmail, userRole }) {
   if (pathname.startsWith("/login")) return null;
   if (!userEmail) return null;
 
-  const isPengurus = userRole === "Pengurus" || userEmail === "Pengurus@Koperasi.com";
-  const isAnggota = userRole === "Anggota" || (!isPengurus && userEmail);
+  const safeRole = userRole?.toLowerCase() || "";
+  const safeEmail = userEmail?.toLowerCase() || "";
+  
+  const isPengurus = safeRole === "pengurus" || safeRole === "admin" || safeEmail.includes("pengurus") || safeEmail.includes("admin");
+  const isAnggota = safeRole === "anggota" || safeEmail.includes("anggota") || (!isPengurus && !!userEmail);
 
   // Menentukan label tampilan untuk user (Anggota KSD / Pengurus KSD)
   const displayUser = isPengurus ? "Pengurus KSD" : "Anggota KSD";
@@ -27,19 +30,21 @@ export default function Navigation({ userEmail, userRole }) {
             </Link>
             <div className="flex gap-2 sm:gap-4 whitespace-nowrap">
               {isAnggota && (
-                <Link 
-                  href="/dashboard-anggota" 
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${pathname === "/dashboard-anggota" ? "bg-teal-900 text-white" : "text-teal-200 hover:bg-teal-700 hover:text-white"}`}
-                >
-                  Dashboard Anggota
-                </Link>
+                <>
+                  <Link 
+                    href="/dashboard-anggota" 
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${pathname === "/dashboard-anggota" ? "bg-teal-900 text-white" : "text-teal-200 hover:bg-teal-700 hover:text-white"}`}
+                  >
+                    Dashboard Anggota
+                  </Link>
+                  <Link 
+                    href="/simpanan" 
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${pathname === "/simpanan" ? "bg-teal-900 text-white" : "text-teal-200 hover:bg-teal-700 hover:text-white"}`}
+                  >
+                    Pembiayaan
+                  </Link>
+                </>
               )}
-              <Link 
-                href="/simpanan" 
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${pathname === "/simpanan" ? "bg-teal-900 text-white" : "text-teal-200 hover:bg-teal-700 hover:text-white"}`}
-              >
-                Pembiayaan
-              </Link>
               {isPengurus && (
                 <Link 
                   href="/dashboard-pengurus" 

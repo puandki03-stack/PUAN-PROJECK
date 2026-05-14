@@ -32,7 +32,8 @@ export default async function RootLayout({ children }) {
       userRole = parsed.role;
     } catch (e) {
       userEmail = cookieVal;
-      userRole = userEmail === "Pengurus@Koperasi.com" ? "Pengurus" : "Anggota";
+      const safeEmail = userEmail?.toLowerCase() || "";
+      userRole = (safeEmail.includes("pengurus") || safeEmail.includes("admin")) ? "Pengurus" : "Anggota";
     }
   }
 

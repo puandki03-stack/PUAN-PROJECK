@@ -16,6 +16,18 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
+  try {
+    const parsed = JSON.parse(cookieVal);
+    if (parsed.role !== "Anggota") {
+      redirect("/dashboard-pengurus");
+    }
+  } catch (e) {
+    const safeVal = cookieVal?.toLowerCase() || "";
+    if (safeVal.includes("pengurus") || safeVal.includes("admin")) {
+      redirect("/dashboard-pengurus");
+    }
+  }
+
   // Mengubah tulisan raw JSON menjadi 'Anggota KSD' sesuai permintaan
   const user = { email: "Anggota KSD" };
 
