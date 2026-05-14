@@ -63,10 +63,10 @@ export default async function LandingPage() {
               ) : (
                 <>
                   <Link 
-                    href="/register"
+                    href="/produk"
                     className="w-full sm:w-auto px-8 py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-teal-950 font-bold text-lg shadow-lg shadow-amber-500/30 transition-all transform hover:-translate-y-1"
                   >
-                    Gabung Sekarang
+                    Produk
                   </Link>
                   <Link 
                     href="/login"
